@@ -60,3 +60,103 @@
     </style>
 </head>
 
+<body>
+
+<div class="container">
+
+    <h2>Location Search</h2>
+
+    <div class="identitas">
+        Narendra Nabil Putra Wardana<br>
+        20240140149
+    </div>
+
+    <div class="search">
+        <input id="inputLokasi" placeholder="Masukkan lokasi">
+        <button onclick="cariLokasi()">Search</button>
+    </div>
+
+    <p id="pesan"></p>
+
+    <div class="data">
+        <span class="label">Lokasi</span>
+        <span id="lokasi">-</span>
+    </div>
+
+    <div class="data">
+        <span class="label">Negara</span>
+        <span id="negara">-</span>
+    </div>
+
+    <div class="data">
+        <span class="label">Provinsi</span>
+        <span id="provinsi">-</span>
+    </div>
+
+    <div class="data">
+        <span class="label">Kecamatan</span>
+        <span id="kecamatan">-</span>
+    </div>
+
+    <div class="data">
+        <span class="label">Longitude</span>
+        <span id="longitude">-</span>
+    </div>
+
+    <div class="data">
+        <span class="label">Latitude</span>
+        <span id="latitude">-</span>
+    </div>
+
+</div>
+
+<script>
+
+function cariLokasi() {
+
+    let lokasi = document.getElementById("inputLokasi").value;
+
+    if (lokasi == "") {
+        document.getElementById("pesan").textContent =
+            "Masukkan lokasi terlebih dahulu";
+        return;
+    }
+
+    fetch("/api/lokasi?lokasi=" + encodeURIComponent(lokasi))
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            if (data.message) {
+                document.getElementById("pesan").textContent =
+                    data.message;
+                return;
+            }
+
+            document.getElementById("pesan").textContent = "";
+
+            document.getElementById("lokasi").textContent =
+                data.lokasi;
+
+            document.getElementById("negara").textContent =
+                data.negara;
+
+            document.getElementById("provinsi").textContent =
+                data.provinsi;
+
+            document.getElementById("kecamatan").textContent =
+                data.kecamatan;
+
+            document.getElementById("longitude").textContent =
+                data.longitude;
+
+            document.getElementById("latitude").textContent =
+                data.latitude;
+        });
+}
+
+</script>
+
+</body>
+</html>
