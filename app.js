@@ -64,3 +64,27 @@ app.get("/api/lokasi", async (req, res) => {
 
         }
 
+        res.json({
+            lokasi: tempat.place_name,
+            negara: negara,
+            provinsi: provinsi,
+            kecamatan: kecamatan,
+            longitude: koordinat[0],
+            latitude: koordinat[1]
+        });
+
+    } catch (error) {
+
+        console.error(error.message);
+
+        res.status(500).json({
+            message: "Gagal mengambil data dari MapTiler"
+        });
+
+    }
+
+});
+
+app.listen(PORT, () => {
+    console.log(`Server berjalan di http://localhost:${PORT}`);
+});
